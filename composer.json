@@ -1,0 +1,27 @@
+{
+    "name": "artcustomer/apiunit",
+    "description": "Abstract layer to build API client in PHP",
+    "keywords": ["api"],
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "David Massenot",
+            "email": "david@artcustomer.fr"
+        }
+    ],
+    "require": {
+        "php": "^7.2|^8.0"
+    },
+    "require-dev" : {
+        
+    },
+    "autoload": {
+        "psr-4": { "Artcustomer\\ApiUnit\\": "src/" }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.x-dev"
+        }
+    }
+}
