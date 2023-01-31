@@ -4,8 +4,6 @@
     "keywords": ["api"],
     "type": "library",
     "license": "MIT",
-    "minimum-stability": "stable",
-    "prefer-stable": true,
     "authors": [
         {
             "name": "David Massenot",
