@@ -5,7 +5,11 @@ namespace Artcustomer\ApiUnit\Event;
 use Artcustomer\ApiUnit\Http\IApiRequest;
 use Artcustomer\ApiUnit\Http\IApiResponse;
 
-interface IApiEvent {
+/**
+ * @author David
+ */
+interface IApiEvent
+{
 
     /**
      * @return string

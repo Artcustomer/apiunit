@@ -5,7 +5,11 @@ namespace Artcustomer\ApiUnit\Normalizer;
 use Artcustomer\ApiUnit\Http\ApiResponse;
 use Artcustomer\ApiUnit\Http\IApiResponse;
 
-interface IResponseNormalizer {
+/**
+ * @author David
+ */
+interface IResponseNormalizer
+{
 
     /**
      * @param string $endpoint

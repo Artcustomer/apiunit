@@ -2,7 +2,11 @@
 
 namespace Artcustomer\ApiUnit\Utils;
 
-class ApiEventTypes {
+/**
+ * @author David
+ */
+class ApiEventTypes
+{
 
     const EXECUTION_ERROR = 'error';
     const EXECUTION_SUCCESS = 'success';

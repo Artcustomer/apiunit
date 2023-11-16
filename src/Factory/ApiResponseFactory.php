@@ -5,7 +5,11 @@ namespace Artcustomer\ApiUnit\Factory;
 use Artcustomer\ApiUnit\Http\ApiResponse;
 use Artcustomer\ApiUnit\Http\IApiResponse;
 
-class ApiResponseFactory {
+/**
+ * @author David
+ */
+class ApiResponseFactory
+{
 
     /**
      * @var ApiResponse
@@ -13,15 +17,18 @@ class ApiResponseFactory {
     private $responseDecorator;
 
     /**
-     * ApiResponseFactory constructor.
-     * @param ApiResponse|NULL $responseDecorator
+     * Constructor
+     *
+     * @param ApiResponse|null $responseDecorator
      */
-    public function __construct(ApiResponse $responseDecorator = NULL) {
+    public function __construct(ApiResponse $responseDecorator = null)
+    {
         $this->responseDecorator = $responseDecorator;
     }
 
     /**
      * Create ApiResponse instance
+     *
      * @param int $statusCode
      * @param string $reasonPhrase
      * @param string $message
@@ -29,10 +36,11 @@ class ApiResponseFactory {
      * @param null $customData
      * @return IApiResponse
      */
-    public function create(int $statusCode, string $reasonPhrase = '', string $message = '', $content = null, $customData = null): IApiResponse {
+    public function create(int $statusCode, string $reasonPhrase = '', string $message = '', $content = null, $customData = null): IApiResponse
+    {
         $response = new ApiResponse();
 
-        if (NULL !== $this->responseDecorator) {
+        if (null !== $this->responseDecorator) {
             $response = $this->responseDecorator;
         }
 
@@ -44,5 +52,4 @@ class ApiResponseFactory {
 
         return $response;
     }
-
 }

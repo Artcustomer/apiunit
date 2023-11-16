@@ -2,6 +2,10 @@
 
 namespace Artcustomer\ApiUnit\Http;
 
-interface IHttpItem {
+/**
+ * @author David
+ */
+interface IHttpItem
+{
 
 }

@@ -2,16 +2,21 @@
 
 namespace Artcustomer\ApiUnit\Client;
 
+use Artcustomer\ApiUnit\Enum\ClientConfig;
 use Artcustomer\ApiUnit\Http\CurlApiRequest;
-use Artcustomer\ApiUnit\Http\IApiResponse;
 use Artcustomer\ApiUnit\Http\IApiRequest;
+use Artcustomer\ApiUnit\Http\IApiResponse;
 use Artcustomer\ApiUnit\Mock\CurlApiMock;
 use Artcustomer\ApiUnit\Mock\IApiMock;
-use Artcustomer\ApiUnit\Utils\ApiMethodTypes;
 use Artcustomer\ApiUnit\Utils\ApiEventTypes;
 use Artcustomer\ApiUnit\Utils\ApiListenerTypes;
+use Artcustomer\ApiUnit\Utils\ApiMethodTypes;
 
-class CurlApiClient extends AbstractApiClient {
+/**
+ * @author David
+ */
+class CurlApiClient extends AbstractApiClient
+{
 
     /**
      * @var array
@@ -24,15 +29,18 @@ class CurlApiClient extends AbstractApiClient {
     protected $options = [];
 
     /**
-     * CurlApiClient constructor.
+     * Constructor
+     *
      * @param array $params
+     * @param array $clientConfig
      */
-    public function __construct(array $params) {
-        parent::__construct($params);
+    public function __construct(array $params, array $clientConfig = [])
+    {
+        parent::__construct($params, $clientConfig);
 
         $this->requestClassName = CurlApiRequest::class;
         $this->config = [
-            'enableProxy' => FALSE
+            ClientConfig::ENABLE_PROXY => false
         ];
         $this->options = [
             CURLOPT_VERBOSE => 0
@@ -42,23 +50,27 @@ class CurlApiClient extends AbstractApiClient {
     /**
      * Initialize Client
      */
-    public function initialize(): void {
-        
+    public function initialize(): void
+    {
+
     }
 
     /**
      * Setup Curl Client
      */
-    protected function setupClient(): void {
-        
+    protected function setupClient(): void
+    {
+
     }
 
     /**
      * Do sync request
+     *
      * @param IApiRequest $request
      * @return IApiResponse
      */
-    protected function doRequest(IApiRequest $request): IApiResponse {
+    protected function doRequest(IApiRequest $request): IApiResponse
+    {
         $this->triggerEvent(ApiEventTypes::PRE_EXECUTE, $request);
         $this->triggerExternalEvent(ApiEventTypes::PRE_EXECUTE, $request);
         $this->triggerListener(ApiListenerTypes::PRE_EXECUTE, $request);
@@ -66,27 +78,27 @@ class CurlApiClient extends AbstractApiClient {
         /** @var CurlApiMock $mock */
         $mock = $this->applyMock($request);
 
-        if (NULL !== $mock) {
+        if (null !== $mock) {
             $result = [
                 'status' => $mock->getStatus(),
                 'result' => $mock->getContent(),
-                'error' => FALSE,
+                'error' => false,
                 'message' => ''
             ];
         } else {
             $result = $this->executeCurl($request);
         }
 
-        if (FALSE === $result['error']) {
+        if (false === $result['error']) {
             $statusCode = $result['status'] !== 0 ? $result['status'] : 500;
-            $content = $result['result'] ?? NULL;
+            $content = $result['result'] ?? null;
             $response = $this->responseFactory->create($statusCode, '', '', $content, $request->getCustomData());
 
             $this->applyNormalizer($request, $response);
             $this->triggerEvent(ApiEventTypes::EXECUTION_SUCCESS, $request, $response);
             $this->triggerExternalEvent(ApiEventTypes::N_SUCCESS, $request, $response);
         } else {
-            $response = $this->responseFactory->create($result['status'], '', $result['message'], NULL, $request->getCustomData());
+            $response = $this->responseFactory->create($result['status'], '', $result['message'], null, $request->getCustomData());
 
             $this->triggerEvent(ApiEventTypes::EXECUTION_ERROR, $request, $response);
             $this->triggerExternalEvent(ApiEventTypes::N_ERROR, $request, $response);
@@ -101,10 +113,12 @@ class CurlApiClient extends AbstractApiClient {
 
     /**
      * Do async request
+     *
      * @param IApiRequest $request
      * @return IApiResponse
      */
-    protected function doRequestAsync(IApiRequest $request): IApiResponse {
+    protected function doRequestAsync(IApiRequest $request): IApiResponse
+    {
         // Not implemented yet...
 
         $response = $this->responseFactory->create(500);
@@ -114,58 +128,62 @@ class CurlApiClient extends AbstractApiClient {
 
     /**
      * Apply mock if available
+     *
      * @param IApiRequest $request
      * @return null|IApiMock
      */
-    protected function applyMock(IApiRequest $request): ?IApiMock {
-        if (TRUE === $this->enableMocks) {
+    protected function applyMock(IApiRequest $request): ?IApiMock
+    {
+        if (true === $this->enableMocks) {
             /** @var IApiMock $mock */
             $mock = $this->getAvailableMock($request);
 
-            if (NULL !== $mock && $mock instanceof CurlApiMock) {
+            if (null !== $mock && $mock instanceof CurlApiMock) {
                 return $mock;
             }
         }
 
-        return NULL;
+        return null;
     }
 
     /**
      * Execute curl
+     *
      * @param CurlApiRequest $request
      * @return array
      */
-    private function executeCurl(CurlApiRequest $request) {
+    private function executeCurl(CurlApiRequest $request)
+    {
         $curlOptions = array_replace($this->options, $request->getOptions());
         $curlResult = [
             'status' => 500,
-            'result' => NULL,
-            'error' => TRUE,
+            'result' => null,
+            'error' => true,
             'message' => ''
         ];
-        $result = FALSE;
+        $result = false;
         $ch = $request->getCurlResource();
 
         curl_setopt($ch, CURLOPT_URL, $request->getUri());
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $request->getMethod());
-        curl_setopt($ch, CURLOPT_HEADER, TRUE);
+        curl_setopt($ch, CURLOPT_HEADER, true);
 
         switch ($request->getMethod()) {
             case ApiMethodTypes::GET:
-                curl_setopt($ch, CURLOPT_HTTPGET, TRUE);
+                curl_setopt($ch, CURLOPT_HTTPGET, true);
                 break;
 
             case ApiMethodTypes::POST:
-                curl_setopt($ch, CURLOPT_POST, TRUE);
+                curl_setopt($ch, CURLOPT_POST, true);
                 curl_setopt($ch, CURLOPT_CUSTOMREQUEST, ApiMethodTypes::POST);
 
-                if (NULL !== $request->getBody()) {
+                if (null !== $request->getBody()) {
                     curl_setopt($ch, CURLOPT_POSTFIELDS, $request->getBody());
                 }
                 break;
 
             case ApiMethodTypes::PUT:
-                if (NULL !== $request->getBody()) {
+                if (null !== $request->getBody()) {
                     curl_setopt($ch, CURLOPT_POSTFIELDS, $request->getBody());
                 }
                 break;
@@ -176,7 +194,7 @@ class CurlApiClient extends AbstractApiClient {
 
         curl_setopt($ch, CURLOPT_HTTPHEADER, $this->prepareHeader($request->getHeaders()));
 
-        if (TRUE === $this->config['enableProxy']) {
+        if (true === $this->config['enableProxy']) {
             curl_setopt($ch, CURLOPT_PROXY, $this->config['proxy']);
             curl_setopt($ch, CURLOPT_PROXYUSERPWD, $this->config['proxyuserpwd']);
         }
@@ -189,15 +207,15 @@ class CurlApiClient extends AbstractApiClient {
             $result = curl_exec($ch);
         } catch (\Exception $e) {
             $curlResult['status'] = 500;
-            $curlResult['result'] = NULL;
-            $curlResult['error'] = TRUE;
+            $curlResult['result'] = null;
+            $curlResult['error'] = true;
             $curlResult['message'] = $e->getMessage();
         }
 
-        if (FALSE !== $result) {
+        if (false !== $result) {
             $curlResult['status'] = curl_getinfo($ch, CURLINFO_HTTP_CODE);
             $curlResult['result'] = $result;
-            $curlResult['error'] = FALSE;
+            $curlResult['error'] = false;
         } else {
             $curlError = curl_error($ch);
             $errorMessage = 'Unknown';
@@ -207,8 +225,8 @@ class CurlApiClient extends AbstractApiClient {
             }
 
             $curlResult['status'] = 500;
-            $curlResult['result'] = NULL;
-            $curlResult['error'] = TRUE;
+            $curlResult['result'] = null;
+            $curlResult['error'] = true;
             $curlResult['message'] = sprintf('Curl error : %s', $errorMessage);
         }
 
@@ -219,14 +237,20 @@ class CurlApiClient extends AbstractApiClient {
         return $curlResult;
     }
 
-    private function prepareHeader(array $headers): array {
+    /**
+     * Prepare header
+     *
+     * @param array $headers
+     * @return array
+     */
+    private function prepareHeader(array $headers): array
+    {
         $header = [];
 
-        foreach($headers as $key => $value) {
+        foreach ($headers as $key => $value) {
             $header[] = sprintf('%s:%s', $key, $value);
         }
 
         return $header;
     }
-
 }

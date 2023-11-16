@@ -2,7 +2,11 @@
 
 namespace Artcustomer\ApiUnit\Utils;
 
-class ApiListenerTypes {
+/**
+ * @author David
+ */
+class ApiListenerTypes
+{
 
     const PRE_EXECUTE = 'preExecute';
     const POST_EXECUTE = 'postExecute';

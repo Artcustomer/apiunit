@@ -2,7 +2,11 @@
 
 namespace Artcustomer\ApiUnit\Logger;
 
-interface IApiLogger {
+/**
+ * @author David
+ */
+interface IApiLogger
+{
 
     /**
      * @param \Exception $exception

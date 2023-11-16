@@ -5,7 +5,11 @@ namespace Artcustomer\ApiUnit\Event;
 use Artcustomer\ApiUnit\Http\IApiRequest;
 use Artcustomer\ApiUnit\Http\IApiResponse;
 
-abstract class AbstractApiEvent {
+/**
+ * @author David
+ */
+abstract class AbstractApiEvent
+{
 
     /**
      * @var string
@@ -23,52 +27,58 @@ abstract class AbstractApiEvent {
     protected $response;
 
     /**
-     * AbstractApiEvent constructor.
+     * Constructor
      */
-    public function __construct() {
-        
+    public function __construct()
+    {
+
     }
 
     /**
      * @return string
      */
-    public function getName(): string {
+    public function getName(): string
+    {
         return $this->name;
     }
 
     /**
      * @param string $name
      */
-    public function setName(string $name): void {
+    public function setName(string $name): void
+    {
         $this->name = $name;
     }
 
     /**
      * @return IApiRequest
      */
-    public function getRequest(): IApiRequest {
+    public function getRequest(): IApiRequest
+    {
         return $this->request;
     }
 
     /**
      * @param null|IApiRequest $request
      */
-    public function setRequest(?IApiRequest $request): void {
+    public function setRequest(?IApiRequest $request): void
+    {
         $this->request = $request;
     }
 
     /**
      * @return IApiResponse
      */
-    public function getResponse(): IApiResponse {
+    public function getResponse(): IApiResponse
+    {
         return $this->response;
     }
 
     /**
      * @param null|IApiResponse $response
      */
-    public function setResponse(?IApiResponse $response): void {
+    public function setResponse(?IApiResponse $response): void
+    {
         $this->response = $response;
     }
-
 }

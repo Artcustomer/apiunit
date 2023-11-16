@@ -2,7 +2,11 @@
 
 namespace Artcustomer\ApiUnit\Http;
 
-class CurlApiRequest extends AbstractApiRequest {
+/**
+ * @author David
+ */
+class CurlApiRequest extends AbstractApiRequest
+{
 
     /**
      * @var \CurlHandle
@@ -10,25 +14,29 @@ class CurlApiRequest extends AbstractApiRequest {
     private $curlResource = false;
 
     /**
-     * CurlApiRequest constructor.
+     * Constructor
      */
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
     }
 
     /**
      * Setup request
      *
-     * @param $apiParams
+     * @param array $apiParams
+     * @return void
      */
-    public function setup(array $apiParams): void {
-        
+    public function setup(array $apiParams): void
+    {
+
     }
 
     /**
      * Build request
      */
-    public function build(): void {
+    public function build(): void
+    {
         $this->buildHeaders();
         $this->buildOptions();
         $this->buildUri();
@@ -38,71 +46,80 @@ class CurlApiRequest extends AbstractApiRequest {
     /**
      * Pre-Execute callback
      */
-    public function preExecute(): void {
-        
+    public function preExecute(): void
+    {
+
     }
 
     /**
      * Post-Execute callback
      */
-    public function postExecute(): void {
-        
+    public function postExecute(): void
+    {
+
     }
 
     /**
      * Generate Headers
+     *
      * @return array
      */
-    protected function generateHeaders(): array {
+    protected function generateHeaders(): array
+    {
         return [];
     }
 
     /**
      * Build headers
      */
-    protected function buildHeaders(): void {
-        
+    protected function buildHeaders(): void
+    {
+
     }
 
     /**
      * Build options
      */
-    protected function buildOptions(): void {
-        
+    protected function buildOptions(): void
+    {
+
     }
 
     /**
      * Build uri
      */
-    protected function buildUri(): void {
-        
+    protected function buildUri(): void
+    {
+
     }
 
     /**
      * Build resource
      */
-    private function buildResource(): void {
+    private function buildResource(): void
+    {
         $this->curlResource = curl_init();
     }
 
     /**
      * @return \CurlHandle
      */
-    public function getCurlResource(): \CurlHandle  {
+    public function getCurlResource(): \CurlHandle
+    {
         return $this->curlResource;
     }
-    
+
     /**
      * @return string
      */
-    public function getUri(): string {
+    public function getUri(): string
+    {
         $uri = parent::getUri();
-        
+
         if (!empty($this->query)) {
             $uri = sprintf('%s?%s', $uri, http_build_query($this->query));
         }
 
         return $uri;
     }
-
 }

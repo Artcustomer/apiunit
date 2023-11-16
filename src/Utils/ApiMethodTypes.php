@@ -2,7 +2,11 @@
 
 namespace Artcustomer\ApiUnit\Utils;
 
-class ApiMethodTypes {
+/**
+ * @author David
+ */
+class ApiMethodTypes
+{
 
     const GET = 'GET';
     const POST = 'POST';
@@ -42,12 +46,13 @@ class ApiMethodTypes {
      * @param string|NULL $method
      * @return bool
      */
-    public static function hasMethod(string $method = NULL): bool {
-        if (NULL !== $method) {
+    public static function hasMethod(string $method = null): bool
+    {
+        if (null !== $method) {
             return in_array($method, self::METHOD_LIST, true);
         }
 
-        return FALSE;
+        return false;
     }
 
 }

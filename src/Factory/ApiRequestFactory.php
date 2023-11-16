@@ -4,7 +4,11 @@ namespace Artcustomer\ApiUnit\Factory;
 
 use Artcustomer\ApiUnit\Http\IApiRequest;
 
-class ApiRequestFactory {
+/**
+ * @author David
+ */
+class ApiRequestFactory
+{
 
     /**
      * @var array
@@ -12,15 +16,18 @@ class ApiRequestFactory {
     private $apiParams;
 
     /**
-     * ApiRequestFactory constructor.
+     * Constructor
+     *
      * @param array $apiParams
      */
-    public function __construct(array $apiParams) {
+    public function __construct(array $apiParams)
+    {
         $this->apiParams = $apiParams;
     }
 
     /**
      * Create AbstractApiRequest child instance
+     *
      * @param string $className
      * @param array $args
      * @param string $method
@@ -33,7 +40,8 @@ class ApiRequestFactory {
      * @param null $customData
      * @return IApiRequest|null
      */
-    public function create(string $className, array $args, string $method, string $endpoint, array $query = [], $body = null, array $headers = [], $async = false, $secured = false, $customData = null): ?IApiRequest {
+    public function create(string $className, array $args, string $method, string $endpoint, array $query = [], $body = null, array $headers = [], $async = false, $secured = false, $customData = null): ?IApiRequest
+    {
         if (empty($className)) {
             return null;
         }
@@ -56,7 +64,7 @@ class ApiRequestFactory {
 
             return $instance;
         } catch (\Exception $e) {
-            
+
         }
 
         return null;
@@ -64,11 +72,13 @@ class ApiRequestFactory {
 
     /**
      * Instantiate pre-configured AbstractApiRequest class
+     *
      * @param string $className
      * @param array $args
      * @return null|IApiRequest
      */
-    public function instantiate(string $className, $args = []): ?IApiRequest {
+    public function instantiate(string $className, $args = []): ?IApiRequest
+    {
         if (empty($className)) {
             return null;
         }
@@ -81,10 +91,9 @@ class ApiRequestFactory {
 
             return $instance;
         } catch (\Exception $e) {
-            
+
         }
 
         return null;
     }
-
 }

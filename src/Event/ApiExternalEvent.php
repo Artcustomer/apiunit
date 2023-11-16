@@ -2,13 +2,17 @@
 
 namespace Artcustomer\ApiUnit\Event;
 
-class ApiExternalEvent extends AbstractApiEvent implements IApiEvent {
+/**
+ * @author David
+ */
+class ApiExternalEvent extends AbstractApiEvent implements IApiEvent
+{
 
     /**
-     * ApiExternalEvent constructor.
+     * Constructor
      */
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
     }
-
 }

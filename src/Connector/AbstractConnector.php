@@ -7,11 +7,19 @@ use Artcustomer\ApiUnit\Client\AbstractApiClient;
 /**
  * @author David
  */
-abstract class AbstractConnector {
+abstract class AbstractConnector
+{
 
     protected AbstractApiClient $client;
-    
-    public function __construct(AbstractApiClient $client, bool $initializeClient = TRUE) {
+
+    /**
+     * Constructor
+     *
+     * @param AbstractApiClient $client
+     * @param bool $initializeClient
+     */
+    public function __construct(AbstractApiClient $client, bool $initializeClient = true)
+    {
         $this->client = $client;
 
         if ($initializeClient) {
@@ -19,7 +27,11 @@ abstract class AbstractConnector {
         }
     }
 
-    public function getClient(): AbstractApiClient {
+    /**
+     * @return AbstractApiClient
+     */
+    public function getClient(): AbstractApiClient
+    {
         return $this->client;
     }
 }

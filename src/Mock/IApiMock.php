@@ -2,7 +2,11 @@
 
 namespace Artcustomer\ApiUnit\Mock;
 
-interface IApiMock {
+/**
+ * @author David
+ */
+interface IApiMock
+{
 
     /**
      * @param string $endpoint

@@ -2,7 +2,11 @@
 
 namespace Artcustomer\ApiUnit\Http;
 
-interface IApiResponse extends IHttpItem {
+/**
+ * @author David
+ */
+interface IApiResponse extends IHttpItem
+{
 
     /**
      * @return int

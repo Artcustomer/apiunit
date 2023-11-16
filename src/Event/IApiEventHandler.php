@@ -2,7 +2,11 @@
 
 namespace Artcustomer\ApiUnit\Event;
 
-interface IApiEventHandler {
+/**
+ * @author David
+ */
+interface IApiEventHandler
+{
 
     /**
      * @param IApiEvent $event

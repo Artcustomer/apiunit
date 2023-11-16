@@ -2,20 +2,25 @@
 
 namespace Artcustomer\ApiUnit\Mock;
 
-class CurlApiMock extends AbstractApiMock {
+/**
+ * @author David
+ */
+class CurlApiMock extends AbstractApiMock
+{
 
     /**
-     * CurlApiMock constructor.
+     * Constructor.
      */
-    public function __construct() {
-        
+    public function __construct()
+    {
+
     }
 
     /**
      * Build mock
      */
-    public function build(): void {
-        
-    }
+    public function build(): void
+    {
 
+    }
 }

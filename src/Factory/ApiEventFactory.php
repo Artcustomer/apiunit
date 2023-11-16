@@ -7,27 +7,34 @@ use Artcustomer\ApiUnit\Event\IApiEvent;
 use Artcustomer\ApiUnit\Http\IApiRequest;
 use Artcustomer\ApiUnit\Http\IApiResponse;
 
-class ApiEventFactory {
+/**
+ * @author David
+ */
+class ApiEventFactory
+{
 
     const TYPE_INTERNAL = 'internal';
     const TYPE_EXTERNAL = 'external';
 
     /**
-     * ApiEventFactory constructor.
+     * Constructor
      */
-    public function __construct() {
-        
+    public function __construct()
+    {
+
     }
 
     /**
      * Create event
+     *
      * @param string $type
      * @param string $eventName
      * @param IApiRequest|null $request
      * @param IApiResponse|null $response
      * @return null|IApiEvent
      */
-    public function create(string $type, string $eventName, IApiRequest $request = null, IApiResponse $response = null): ?IApiEvent {
+    public function create(string $type, string $eventName, IApiRequest $request = null, IApiResponse $response = null): ?IApiEvent
+    {
         $event = null;
 
         switch ($type) {
@@ -42,7 +49,7 @@ class ApiEventFactory {
                 break;
         }
 
-        if (NULL !== $event) {
+        if (null !== $event) {
             $event->setName($eventName);
             $event->setRequest($request);
             $event->setResponse($response);
@@ -50,5 +57,4 @@ class ApiEventFactory {
 
         return $event;
     }
-
 }

@@ -2,6 +2,10 @@
 
 namespace Artcustomer\ApiUnit\Logger;
 
-trait LogHolderTrait {
-    
+/**
+ * @author David
+ */
+trait LogHolderTrait
+{
+
 }
