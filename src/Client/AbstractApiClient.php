@@ -391,9 +391,9 @@ abstract class AbstractApiClient
     {
         $this->isOperational = true;
 
-        $this->buildDependencies();
         $this->setupClientConfig();
         $this->setupClient();
+        $this->buildDependencies();
     }
 
     /**
