@@ -13,7 +13,12 @@ class ApiRequestFactory
     /**
      * @var array
      */
-    private $apiParams;
+    private array $apiParams = [];
+
+    /**
+     * @var string
+     */
+    private string $lastError = '';
 
     /**
      * Constructor
@@ -42,7 +47,11 @@ class ApiRequestFactory
      */
     public function create(string $className, array $args, string $method, string $endpoint, array $query = [], $body = null, array $headers = [], $async = false, $secured = false, $customData = null): ?IApiRequest
     {
+        $this->lastError = '';
+
         if (empty($className)) {
+            $this->lastError = 'Class name is empty';
+
             return null;
         }
 
@@ -64,7 +73,7 @@ class ApiRequestFactory
 
             return $instance;
         } catch (\Exception $e) {
-
+            $this->lastError = $e->getMessage();
         }
 
         return null;
@@ -77,9 +86,13 @@ class ApiRequestFactory
      * @param array $args
      * @return null|IApiRequest
      */
-    public function instantiate(string $className, $args = []): ?IApiRequest
+    public function instantiate(string $className, array $args = []): ?IApiRequest
     {
+        $this->lastError = '';
+
         if (empty($className)) {
+            $this->lastError = 'Class name is empty';
+
             return null;
         }
 
@@ -91,9 +104,17 @@ class ApiRequestFactory
 
             return $instance;
         } catch (\Exception $e) {
-
+            $this->lastError = $e->getMessage();
         }
 
         return null;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLastError(): string
+    {
+        return $this->lastError;
     }
 }

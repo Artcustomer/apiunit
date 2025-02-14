@@ -215,7 +215,9 @@ abstract class AbstractApiClient
             return $this->doRequest($request);
         }
 
-        return $this->responseFactory->create(500, 'Error while sending request', 'Request is not well formed');
+        $message = $this->requestFactory->getLastError() ?? 'Request is not well formed';
+
+        return $this->responseFactory->create(500, 'Error while sending request', $message);
     }
 
     /**
